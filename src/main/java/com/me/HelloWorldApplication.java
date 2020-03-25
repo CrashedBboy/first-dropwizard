@@ -5,6 +5,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 import com.me.resources.HelloWorldResource;
+import com.me.health.TemplateHealthCheck;
 
 public class HelloWorldApplication extends Application<HelloWorldConfiguration> {
 
@@ -46,6 +47,11 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
          * A Dropwizard application can contain many resource classes, each corresponding to its own URI pattern.
          * Just add another @Path-annotated resource class and call register with an instance of the new class.
          */
+
+         // create and add a health check
+         final TemplateHealthCheck healthCheck = new TemplateHealthCheck(configuration.getTemplate());
+
+         environment.healthChecks().register("template", healthCheck);
     }
 
 }
